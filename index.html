@@ -1,0 +1,36 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cape George HOA GIS Prototype</title>
+  <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+  <link rel="stylesheet" href="css/style.css" />
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Cape George HOA GIS Prototype</h1>
+      <p>Live Jefferson County parcel query plus HOA boundary and common-area context.</p>
+    </div>
+    <div class="search-panel">
+      <input id="searchBox" type="search" placeholder="Search address, PIN, legal, subdivision…" />
+      <button id="searchButton">Search</button>
+      <button id="clearButton">Clear</button>
+    </div>
+  </header>
+  <main>
+    <div id="map"></div>
+    <aside id="results">
+      <h2>Search results</h2>
+      <div id="status" class="status">Loading live county parcels…</div>
+      <div id="resultList">Enter an address, parcel number, legal description, or subdivision.</div>
+      <hr />
+      <p class="note"><strong>Live parcel source:</strong> The member-lot polygons are queried from Jefferson County’s ArcGIS item using a local list of HOA parcel IDs. If the live service is unavailable, the app falls back to the static GeoJSON included in this repository.</p>
+      <p class="note"><strong>Note:</strong> Boundary is a candidate boundary derived from selected parcel geometry. Verify against plats and governing documents before relying on it legally.</p>
+    </aside>
+  </main>
+  <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+  <script src="js/map.js"></script>
+</body>
+</html>
