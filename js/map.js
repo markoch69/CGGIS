@@ -22,7 +22,7 @@ const usgsTopo = L.tileLayer(
   { maxZoom: 16, attribution: 'USGS The National Map' }
 );
 
-esriImagery.addTo(map);
+usgsTopo.addTo(map);
 
 const memberStyle = { color: '#1f5fbf', weight: 1.3, opacity: 0.9, fillColor: '#4f9aff', fillOpacity: 0.12 };
 const boundaryStyle = { color: '#d7191c', weight: 4, opacity: 0.95, fillOpacity: 0 };
