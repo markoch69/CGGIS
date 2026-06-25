@@ -234,7 +234,7 @@ async function initializeMap() {
     onEachFeature: (feature, layer) => layer.bindPopup(popupHtml(feature.properties || {}, 'HOA Common Areas'))
   });
 
-  boundaryLayer.addTo(map);
+//  boundaryLayer.addTo(map);
   commonAreasLayer.addTo(map);
 
   const bounds = L.featureGroup([memberLotsLayer, boundaryLayer, commonAreasLayer]).getBounds();
