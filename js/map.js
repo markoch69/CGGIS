@@ -1,4 +1,4 @@
-const CONFIG = {
+cconst CONFIG = {
   // ArcGIS Hub / ArcGIS Online item for Jefferson County Public Parcels StatePlane.
   countyPortalItemId: 'bac06906630646e08b9f4e7213e16a1e',
   idField: 'PIN_STRING',
@@ -233,6 +233,30 @@ async function initializeMap() {
     style: commonStyle,
     onEachFeature: (feature, layer) => layer.bindPopup(popupHtml(feature.properties || {}, 'HOA Common Areas'))
   });
+
+  // Fetch additional HOA common-area parcels from the county service.
+  // This leaves the existing local common-area polygons intact.
+  try {
+    const extraCommonIds = ['002123001', '002123002', '002123003', '002132002'];
+    const countyUrl = await discoverCountyParcelLayerUrl(CONFIG.countyPortalItemId);
+    const extra = await queryCountyParcels(countyUrl, extraCommonIds, CONFIG.idField);
+    const existing = new Set();
+    commonAreasLayer.eachLayer(layer => {
+      const pin = val(layer.feature?.properties, ['PIN_STRING', 'PIN']);
+      if (pin) existing.add(String(pin).trim());
+    });
+    const additions = extra.features.filter(f => {
+      const pin = String(val(f.properties, ['PIN_STRING', 'PIN'])).trim();
+      return pin && !existing.has(pin);
+    });
+    commonAreasLayer.addData({ type: 'FeatureCollection', features: additions });
+    if (extra.features.length !== extraCommonIds.length) {
+      console.warn(`Only ${extra.features.length} of ${extraCommonIds.length} requested common-area parcels returned by county service.`);
+    }
+  } catch (err) {
+    console.warn('Additional live common-area parcels could not be loaded.', err);
+  }
+
 
 //  boundaryLayer.addTo(map);
   commonAreasLayer.addTo(map);
