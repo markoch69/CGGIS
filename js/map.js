@@ -1,4 +1,4 @@
-cconst CONFIG = {
+const CONFIG = {
   // ArcGIS Hub / ArcGIS Online item for Jefferson County Public Parcels StatePlane.
   countyPortalItemId: 'bac06906630646e08b9f4e7213e16a1e',
   idField: 'PIN_STRING',
